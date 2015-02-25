@@ -11,4 +11,7 @@ public class IngredsTable {
     IngredsTable(){
         name = new HashMap<>();
     }
+    String getName (String id){
+        return this.name.get(id);
+    }
 }

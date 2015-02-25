@@ -26,17 +26,17 @@ public class FirmTable {
         ingredients = new HashMap<>();
     }
 
-    void putName(String id, String name){
-        this.name.put(id, name);
+    String getName(String id){
+        return this.name.get(id);
     }
-    void putPrice(String id, String price){
-        this.price.put(id, price);
+    String getPrice(String id){
+        return this.price.get(id);
     }
-    void putCalories(String id, String calories){
-        this.calories.put(id, calories);
+    String getCalories(String id){
+        return this.calories.get(id);
     }
-    void putIngredients(String id, Set ingredients){
-        this.ingredients.put(id, ingredients);
+    Set<String> getIngredients(String id){
+        return this.ingredients.get(id);
     }
 
 }
