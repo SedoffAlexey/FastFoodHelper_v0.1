@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.Set;
 
@@ -18,14 +19,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TEST//
+        //<<<TEST//
         DataSaver dataSaver = new DataSaver(this);
-        Set <String> set = dataSaver.ReadTable(R.raw.kfc);
+        Set <String> set = dataSaver.readTable(R.raw.kfc);
 
-
-        for (String line : set)
-            Log.i("TEST_MESSAGE", line);
-
+        dataSaver.saveTable("kfc", set);
+        dataSaver.loadFirmTable("kfc");
+        //TEST>>>//
 
     }
 

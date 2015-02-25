@@ -27,7 +27,7 @@ public class DataSaver {
         mSettings = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE); //файл настроек создается, доступ только компон. приложения
     }
 
-    public Set<String> ReadTable (int resource){
+    public Set<String> readTable (int resource){
         try {
             InputStream inputStream = context.getResources().openRawResource(resource);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -43,12 +43,51 @@ public class DataSaver {
         return null;
     }
 
-    public void RefreshFirmTable (String firmName, Set<String> set){
+    public void saveTable (String tableName, Set<String> set){
         SharedPreferences.Editor editor = mSettings.edit();
-        editor.putStringSet(firmName, set);
+        editor.putStringSet(tableName, set);
         editor.apply();
     }
 
+    public FirmTable loadFirmTable (String tableName) {
+        if(mSettings.contains(tableName)) {
+            FirmTable firmTable = new FirmTable(tableName);
+            Set<String> set = mSettings.getStringSet(tableName, new HashSet<String>());
+            for (String string : set){
+                String[] strArr = string.split(" ");
+                String id = strArr[0];
+                firmTable.name.put(id, strArr[1]);
+                firmTable.price.put(id, strArr[2]);
+                firmTable.calories.put(id, strArr[3]);
+                Set<String> ingredients = new HashSet<>();
+                for (int i = 4; i < strArr.length; i++)
+                    ingredients.add(strArr[i]);
+                firmTable.ingredients.put(id, ingredients);
+            }
 
+            //<<<TEST//
+            for (String testMess : firmTable.ingredients.get("002"))
+                Log.i("TESTER", testMess);
+            Log.i("TESTER", firmTable.firmName);
+            //TEST>>>//
 
+            return firmTable;
+        }
+        else return null;
+    }
+
+    public IngredsTable loadIngredsTable(){
+        if(mSettings.contains("ingredients"))
+        {
+            IngredsTable ingredsTable = new IngredsTable();
+            Set<String> set = mSettings.getStringSet("ingredients", new HashSet<String>());
+            for (String string : set){
+                String[] strArr = string.split(" ");
+                String id = strArr[0];
+                ingredsTable.name.put(id, strArr[1]);
+            }
+            return ingredsTable;
+        }
+        else return null;
+    }
 }
