@@ -2,6 +2,7 @@ package ru.my1.sedoff.fastfoodhelper_v01.DataBase;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +27,14 @@ public class Rating {
         rating = new HashMap<>();
     }
     public void boostFrequency(String key) {
-        frequency.put(key,frequency.get(key)+1);
+        if (frequency.containsKey(key)) {
+            int c = frequency.get(key);
+            frequency.put(key, frequency.get(key) + 1);
+        }
+        else
+        {
+            frequency.put(key, 1);
+        }
     }
     public void setRating(String key,Integer Value) {
         rating.put(key,Value);
@@ -71,7 +79,7 @@ public class Rating {
         }
     }
     public void save(Context c, final String s) {
-        mSettings = c.getSharedPreferences(firmName+s, Context.MODE_PRIVATE);
+        mSettings = c.getSharedPreferences(String.format("%s%s", firmName, s), Context.MODE_PRIVATE);
         switch(s)
             {
                 case APP_PREFERENCES_FREQ:
