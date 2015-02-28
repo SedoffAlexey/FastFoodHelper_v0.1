@@ -28,7 +28,6 @@ public class Rating {
     }
     public void boostFrequency(String key) {
         if (frequency.containsKey(key)) {
-            int c = frequency.get(key);
             frequency.put(key, frequency.get(key) + 1);
         }
         else
